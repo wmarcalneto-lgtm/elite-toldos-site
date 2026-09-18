@@ -192,7 +192,7 @@ a { color: inherit; }
     overflow: hidden;
     transition: max-height 0.25s ease;
   }
-  .nav.is-open { max-height: 260px; }
+  .nav.is-open { max-height: 320px; }
   .nav a {
     padding: 14px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
@@ -553,6 +553,24 @@ a { color: inherit; }
 .produtos { padding: 56px 0; }
 
 .produtos h2 { font-size: clamp(26px, 4vw, 34px); margin-bottom: 10px; }
+
+/* Seção separada dos toldos de alto padrão: fundo levemente diferente + filete
+   dourado no topo, para não ler como continuação da seção "Produtos" acima. */
+.alto-padrao-section {
+  background: var(--aluminio-100);
+  border-top: 1px solid var(--aluminio-200);
+  border-bottom: 1px solid var(--aluminio-200);
+  position: relative;
+}
+.alto-padrao-section::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--ambar-500), transparent);
+}
 
 .section-lede {
   color: var(--texto-suave);
