@@ -69,7 +69,7 @@ const valorMinimoPadrao = 800;
 const margem = 0.08;
 
 // Desconto oferecido ao fechar a visita técnica na hora.
-const descontoFechamentoPercentual = 10;
+const descontoFechamentoPercentual = 5;
 
 // Taxa fixa da visita técnica (abatida do valor final se o serviço for fechado).
 const taxaVisitaTecnica = 30;
@@ -252,19 +252,21 @@ function criarCardProduto(produto, altoPadrao) {
 
 function renderProdutos() {
   const grid = document.getElementById("produtos-grid");
-  // Todos os "Toldo" aparecem antes das "Cobertura", mesmo misturando os de alto
-  // padrão (que não entram na calculadora) com os da lista principal.
-  const todos = [
-    ...produtos.map((produto) => ({ produto, altoPadrao: false })),
-    ...produtosAltoPadrao.map((produto) => ({ produto, altoPadrao: true })),
-  ];
+  // Nesta seção só entram os produtos da calculadora. Toldos sempre antes de
+  // Coberturas, para o cliente entender os grupos de cara.
   const categoria = (nome) => (nome.startsWith("Toldo") ? 0 : 1);
-  todos.sort((a, b) => categoria(a.produto.nome) - categoria(b.produto.nome));
-  todos.forEach(({ produto, altoPadrao }) => grid.appendChild(criarCardProduto(produto, altoPadrao)));
+  const ordenados = [...produtos].sort((a, b) => categoria(a.nome) - categoria(b.nome));
+  ordenados.forEach((produto) => grid.appendChild(criarCardProduto(produto, false)));
+}
+
+function renderProdutosAltoPadrao() {
+  const grid = document.getElementById("produtos-alto-padrao-grid");
+  produtosAltoPadrao.forEach((produto) => grid.appendChild(criarCardProduto(produto, true)));
 }
 
 renderChips();
 renderProdutos();
+renderProdutosAltoPadrao();
 calcular();
 
 // Menu mobile
